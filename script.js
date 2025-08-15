@@ -155,6 +155,11 @@ function switchTab(tabName) {
             switchAirlineView('boarding');
         }, 50);
     }
+    else if (tabName === 'international') {
+        setTimeout(() => {
+            renderInternational();
+        }, 50);
+    }
 }
 
 // Chat functionality
@@ -2145,7 +2150,78 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Airport view init skipped (elements may not be mounted yet).');
         }
     }, 300);
+    
+    // Preload International
+    setTimeout(() => { try { renderInternational(); } catch(e){} }, 400);
 });
+
+// International tab rendering with locale detection and QR generation
+function detectPreferredLang() {
+    const locale = (navigator.language || navigator.userLanguage || 'en-GB').toLowerCase();
+    if (locale.startsWith('ar')) return 'ar';
+    return 'en-GB';
+}
+
+function getIntlStrings(lang) {
+    if (lang === 'ar') {
+        return {
+            title: 'تجربة سفر ميسرة وبسيطة',
+            tagline: 'مساعدة مخصصة تجمع بين المطار وشركة الطيران لخدمتك.',
+            langLabel: 'اللغة:',
+            points: [
+                'دعم مخصص لاحتياجاتك',
+                'مكان اللقاء حسب رغبتك: المكتب أو المواقف أو الاستراحة',
+                'شراكة بين شركة الطيران والمطار'
+            ],
+            qrCaption: 'امسح QR لتجربة العرض'
+        };
+    }
+    return {
+        title: 'Accessible travel, made simple',
+        tagline: 'Personalised assistance that brings airports and airlines together for you.',
+        langLabel: 'Language:',
+        points: [
+            'Support tailored to your needs',
+            'Meet anywhere: desk, parking or lounge',
+            'Airline + airport, working together'
+        ],
+        qrCaption: 'Scan to try the demo'
+    };
+}
+
+function onLanguageChange(value) {
+    renderInternational(value);
+}
+
+function renderInternational(forceLang) {
+    const lang = forceLang || detectPreferredLang();
+    const isRTL = lang === 'ar';
+    const title = document.getElementById('intlTitle');
+    const tag = document.getElementById('intlTagline');
+    const label = document.getElementById('intlLangLabel');
+    const select = document.getElementById('languageSelect');
+    const points = document.getElementById('intlPoints');
+    const qr = document.getElementById('intlQr');
+    const qrCap = document.getElementById('intlQrCaption');
+    const wrap = document.querySelector('#international .intl-wrap');
+    if (!title || !tag || !label || !select || !points || !qr || !qrCap || !wrap) return;
+    
+    // Apply RTL
+    wrap.classList.toggle('rtl', isRTL);
+    select.value = lang;
+    
+    const t = getIntlStrings(lang);
+    title.textContent = t.title;
+    tag.textContent = t.tagline;
+    label.textContent = t.langLabel;
+    qrCap.textContent = t.qrCaption;
+    points.innerHTML = t.points.map(p => `<div class="point"><i class="fas fa-check-circle"></i><span>${p}</span></div>`).join('');
+    
+    // Generate a simple QR via Google Charts API
+    const url = location.origin + location.pathname;
+    const encoded = encodeURIComponent(url);
+    qr.src = `https://chart.googleapis.com/chart?cht=qr&chs=220x220&chl=${encoded}`;
+}
 
 // Airport dashboard subviews and helpers
 function switchAirportView(view) {

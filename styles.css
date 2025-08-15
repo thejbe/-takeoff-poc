@@ -90,6 +90,20 @@ body {
     display: block;
 }
 
+/* International tab */
+.intl-wrap { padding: 2rem; background: #f8fafc; height: 100%; }
+.intl-hero { text-align: center; margin-bottom: 1.5rem; }
+.intl-hero h2 { font-size: 2rem; color: #111827; margin-bottom: 0.5rem; }
+.intl-hero p { color: #475569; }
+.intl-controls { display:flex; justify-content:center; align-items:center; gap:0.5rem; margin-bottom:1.5rem; }
+.intl-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; align-items:center; }
+.intl-qr { background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1rem; text-align:center; }
+.intl-qr img { width: 220px; height: 220px; }
+.intl-qr-caption { margin-top:0.5rem; color:#64748b; }
+.intl-points { display:grid; gap:0.75rem; }
+.intl-points .point { display:flex; align-items:center; gap:0.6rem; background:#ffffff; border:1px solid #e2e8f0; border-radius:10px; padding:0.75rem; color:#334155; }
+.rtl { direction: rtl; }
+
 /* Chat Styles */
 .chat-container {
     height: 100%;

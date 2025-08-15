@@ -27,6 +27,10 @@
                 <i class="fas fa-plane-departure"></i>
                 Airline View
             </button>
+            <button class="tab-button" onclick="switchTab('international')">
+                <i class="fas fa-globe"></i>
+                International
+            </button>
         </nav>
 
         <main class="tab-content">
@@ -349,6 +353,34 @@
                 </div>
             </div>
         </main>
+        
+        <!-- International Tab -->
+        <div id="international" class="tab-panel">
+            <div class="intl-wrap">
+                <div class="intl-hero">
+                    <h2 id="intlTitle">Accessible travel, made simple</h2>
+                    <p id="intlTagline">Personalised assistance that brings airports and airlines together for you.</p>
+                </div>
+                <div class="intl-controls">
+                    <label for="languageSelect" id="intlLangLabel">Language:</label>
+                    <select id="languageSelect" onchange="onLanguageChange(this.value)">
+                        <option value="en-GB">English (UK)</option>
+                        <option value="ar">العربية</option>
+                    </select>
+                </div>
+                <div class="intl-grid">
+                    <div class="intl-qr">
+                        <img id="intlQr" alt="QR code" src=""/>
+                        <div class="intl-qr-caption" id="intlQrCaption">Scan to try the demo</div>
+                    </div>
+                    <div class="intl-points" id="intlPoints">
+                        <div class="point"><i class="fas fa-user-shield"></i><span>Support tailored to your needs</span></div>
+                        <div class="point"><i class="fas fa-route"></i><span>Meet anywhere: desk, parking or lounge</span></div>
+                        <div class="point"><i class="fas fa-handshake"></i><span>Airline + airport, working together</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
